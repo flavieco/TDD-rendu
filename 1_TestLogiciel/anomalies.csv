@@ -1,0 +1,9 @@
+subject,description
+Impossible de créer une instance de Checkout,La classe Checkout lève une erreur à l'instanciation
+Le prix d'un article ne peut pas être ajouté,L'appel à add_price() ne fonctionne pas correctement
+Impossible d'ajouter un article au panier,L'appel à add_item() retourne une erreur inattendue
+Le calcul du prix total est incorrect,La méthode total() ne retourne pas la somme correcte des articles
+Le prix total avec plusieurs articles est faux,L'addition de plusieurs articles donne un résultat erroné
+Les règles de réduction ne peuvent pas être ajoutées,L'appel à add_discount() échoue sans message d'erreur clair
+La réduction n'est pas appliquée sur le prix total,Le total() ne tient pas compte des règles de réduction définies
+Aucune exception levée si un article est ajouté sans prix,Le système accepte un article sans prix au lieu de lever une exception
