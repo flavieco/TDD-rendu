@@ -12,6 +12,7 @@ def test_add_price():
 
 def test_add_product():
     checkout = Checkout()
+    checkout.add_price("Apple", 1.00)
     checkout.add_product("Apple")
     assert checkout.products == ["Apple"]
 
@@ -19,16 +20,33 @@ def test_get_total_price():
     checkout = Checkout()
     checkout.add_price("Apple", 1.00)
     checkout.add_product("Apple")
-    assert checkout.get_total_price == 1.00
+    assert checkout.get_total_price() == 1.00
 
 def test_multiple_articles_workflow():
-    assert True
+    checkout = Checkout()
+    checkout.add_price("Apple", 1.00)
+    checkout.add_price("Banana", 3.00)
+    checkout.add_product("Apple")
+    checkout.add_product("Apple")
+    checkout.add_product("Banana")
+    assert checkout.get_total_price() == 5.00
 
 def test_add_discount():
-    assert True
+    checkout = Checkout()
+    checkout.add_discount("Apple", lambda x: x * 0.9)
+    assert checkout.discounts["Apple"](1.00) == 0.90
 
 def test_apply_discount():
-    assert True
+    checkout = Checkout()
+    checkout.add_price("Apple", 1.00)
+    checkout.add_price("Banana", 3.00)
+    checkout.add_product("Apple")
+    checkout.add_product("Apple")
+    checkout.add_product("Banana")
+    checkout.add_discount("Apple", lambda x: x * 0.9)
+    assert checkout.get_total_price() == 4.80
 
 def test_article_without_price():
-    assert True
+    checkout = Checkout()
+    with pytest.raises(Exception):
+        checkout.add_product("Apple")
