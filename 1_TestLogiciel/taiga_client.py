@@ -9,7 +9,7 @@ USERNAME = os.getenv("TAIGA_USERNAME")
 PASSWORD = os.getenv("TAIGA_PASSWORD")
 PROJECT_SLUG = "flavieco-tdd"  # à adapter
 
-# ── Étape 2 : Connexion ──────────────────────────────────────────
+# Connexion
 response = requests.post(f"{BASE_URL}/auth", json={
     "type": "normal",
     "username": USERNAME,
@@ -20,20 +20,20 @@ headers = {
     "Authorization": f"Bearer {token}",
     "Content-Type": "application/json"
 }
-print(f"✅ Connecté en tant que : {USERNAME}")
+print(f"Connecté en tant que : {USERNAME}")
 
-# ── Étape 3 : Lire les infos du projet ───────────────────────────
+# Infos du projet
 response = requests.get(f"{BASE_URL}/projects/by_slug?slug={PROJECT_SLUG}", headers=headers)
 project = response.json()
 project_id = project["id"]
-print(f"✅ Projet trouvé : {project['name']} (id={project_id})")
+print(f"Projet : {project['name']}")
 
-# ── Étape 4 : Liste des anomalies ────────────────────────────────
+# Anomalies
 response = requests.get(f"{BASE_URL}/issues?project={project_id}", headers=headers)
 issues = response.json()
-print(f"✅ {len(issues)} anomalie(s) trouvée(s)")
+print(f"{len(issues)} anomalies trouvées")
 
-# ── Étape 5 : Créer une anomalie ─────────────────────────────────
+# Créer une anomalie
 new_issue = {
     "project": project_id,
     "subject": "Le calcul du prix total est incorrect",
@@ -42,21 +42,21 @@ new_issue = {
 response = requests.post(f"{BASE_URL}/issues", json=new_issue, headers=headers)
 issue = response.json()
 issue_id = issue["id"]
-print(f"✅ Anomalie créée : #{issue['ref']} — {issue['subject']}")
+print(f"Anomalie créée : {issue['subject']}")
 
-# ── Étape 6 : Afficher les infos de l'anomalie ───────────────────
+# Infos de l'anomalie
 response = requests.get(f"{BASE_URL}/issues/{issue_id}", headers=headers)
 detail = response.json()
-print(f"✅ Détails : #{detail['ref']} | {detail['subject']} | {detail['status_extra_info']['name']}")
+print(f"Détails : #{detail['ref']} | {detail['subject']} | {detail['status_extra_info']['name']}")
 
-# ── Étape 7 : Modifier le statut ─────────────────────────────────
+# Modifier le statut
 response = requests.get(f"{BASE_URL}/issue-statuses?project={project_id}", headers=headers)
 statuses = response.json()
 new_status_id = statuses[1]["id"]  # prend le 2ème statut disponible
 requests.patch(f"{BASE_URL}/issues/{issue_id}", json={"status": new_status_id}, headers=headers)
-print(f"✅ Statut mis à jour : {statuses[1]['name']}")
+print(f"Statut mis à jour : {statuses[1]['name']}")
 
-# ── Étape 8 : Import depuis CSV ──────────────────────────────────
+# Import depuis CSV
 with open("anomalies.csv", newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
@@ -66,4 +66,4 @@ with open("anomalies.csv", newline='', encoding='utf-8') as f:
             "description": row["description"]
         }
         r = requests.post(f"{BASE_URL}/issues", json=payload, headers=headers)
-        print(f"✅ Issue importée : {r.json()['subject']}")
+        print(f"Issue importée : {r.json()['subject']}")
