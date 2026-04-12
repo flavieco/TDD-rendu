@@ -1,0 +1,4 @@
+subject;description
+Le calcul du prix total est incorrect;Le total ne tient pas compte des reductions.
+Erreur 500 lors de la connexion;Le serveur renvoie une erreur interne quand le mot de passe contient des caracteres speciaux.
+Page blanche apres mise a jour;L'application affiche une page blanche apres la derniere mise a jour du module utilisateur.
