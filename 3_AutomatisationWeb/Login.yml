@@ -1,0 +1,37 @@
+info:
+  name: Login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{TAIGA_URL}}/auth"
+  body:
+    type: json
+    data: |-
+      {
+        "type": "normal",
+        "username": "{{TAIGA_USERNAME}}",
+        "password": "{{TAIGA_PASSWORD}}"
+      }
+
+runtime:
+  assertions:
+    - expression: taiga_auth_token
+      operator: startsWith
+      value: '"eyJ"'
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.auth_token
+        method: jsonq
+      variable:
+        name: taiga_auth_token
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

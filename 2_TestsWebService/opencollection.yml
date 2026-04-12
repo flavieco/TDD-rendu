@@ -1,0 +1,37 @@
+opencollection: 1.0.0
+
+info:
+  name: 2_TestsWebService
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  auth:
+    type: bearer
+    token: "{{taiga_auth_token}}"
+  scripts:
+    - type: tests
+      code: |-
+        test("Status code is validated", function() {
+           const status = res.getStatus();
+           expect(status).to.be.oneOf([200, 201, 204]);
+        });
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    presets:
+      request:
+        type: http
+        url: "{{TAIGA_URL}}"

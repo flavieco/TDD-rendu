@@ -1,0 +1,64 @@
+info:
+  name: Create Anomaly
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{TAIGA_URL}}/issues"
+  body:
+    type: json
+    data: |-
+      {
+        "project": "{{project_id}}",
+        "subject": "{{subject}}",
+        "description": "{{description}}"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const anomalies = JSON.parse(bru.getVar("anomalies"));
+        const index = parseInt(bru.getVar("current_index"));
+        const current = anomalies[index];
+        bru.setVar("subject", current.subject);
+        bru.setVar("description", current.description);
+    - type: after-response
+      code: |-
+        const anomalies = JSON.parse(bru.getVar("anomalies"));
+        const index = parseInt(bru.getVar("current_index"));
+        if (index + 1 < anomalies.length) {
+          bru.setVar("current_index", String(index + 1));
+          bru.setNextRequest("Create Anomaly");
+        }
+  assertions:
+    - expression: res.body.version
+      operator: eq
+      value: "1"
+    - expression: res.body.id
+      operator: isNumber
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.id
+        method: jsonq
+      variable:
+        name: issue_id
+        scope: runtime
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.version
+        method: jsonq
+      variable:
+        name: issue_version
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

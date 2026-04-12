@@ -1,0 +1,28 @@
+info:
+  name: Update Anomaly
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: "{{TAIGA_URL}}/issues/{{issue_id}}"
+  body:
+    type: json
+    data: |-
+      {
+        "status": "12466623",
+        "version": {{issue_version}}
+      }
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.body.status
+      operator: eq
+      value: "12466623"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

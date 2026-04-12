@@ -1,0 +1,60 @@
+info:
+  name: Get Project
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{TAIGA_URL}}/projects/by_slug?slug=flavieco-tdd"
+  params:
+    - name: slug
+      value: flavieco-tdd
+      type: query
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.body.id
+      operator: isNumber
+    - expression: res.body.name
+      operator: eq
+      value: '"TDD"'
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.id
+        method: jsonq
+      variable:
+        name: project_id
+        scope: runtime
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.issue_types
+        method: jsonq
+      variable:
+        name: types
+        scope: runtime
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.priorities
+        method: jsonq
+      variable:
+        name: priorities
+        scope: runtime
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.severities
+        method: jsonq
+      variable:
+        name: severities
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

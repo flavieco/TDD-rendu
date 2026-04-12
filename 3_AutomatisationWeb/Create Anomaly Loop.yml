@@ -1,0 +1,48 @@
+info:
+  name: Create Anomaly Loop
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{TAIGA_URL}}/issues"
+  body:
+    type: json
+    data: |-
+      {
+        "project": "{{project_id}}",
+        "subject": "{{subject}}",
+        "description": "{{description}}",
+        "type": "{{type_id}}",
+        "severity": "{{severity_id}}",
+        "priority": "{{priority_id}}"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const current = bru.getVar("json_issues")[bru.getVar("current_issue")];
+        bru.setVar("subject", current.subject);
+        bru.setVar("description", current.description);
+        bru.setVar("type_id", bru.getVar("types").find(t => t.name === current.type).id);
+        bru.setVar("severity_id", bru.getVar("severities").find(s => s.name === current.severity).id);
+        bru.setVar("priority_id", bru.getVar("priorities").find(p => p.name === current.priority).id);
+    - type: after-response
+      code: |-
+        const issues = bru.getVar("json_issues");
+        const index = bru.getVar("current_issue");
+        if (index + 1 < issues.length) {
+          bru.setVar("current_issue", index + 1);
+          bru.setNextRequest("Create Anomaly Loop");
+        }
+  assertions:
+    - expression: res.body.id
+      operator: isNumber
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

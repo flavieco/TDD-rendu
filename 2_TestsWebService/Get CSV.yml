@@ -1,0 +1,24 @@
+info:
+  name: Get CSV
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: http://localhost:3000/anomalies_csv
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const anomalies = res.getBody();
+        bru.setVar("anomalies", JSON.stringify(anomalies));
+        bru.setVar("current_index", "0");
+        bru.setNextRequest("Create Anomaly");
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
