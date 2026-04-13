@@ -1,0 +1,22 @@
+[
+  {"subject": "Crash au lancement sur iOS 17", "description": "L'application crash immediatement apres le splash screen sur iOS 17.4", "type": "Bug", "severity": "Critical", "priority": "High"},
+  {"subject": "Bouton de validation non cliquable", "description": "Le bouton Valider du formulaire d'inscription ne repond pas au clic", "type": "Bug", "severity": "Important", "priority": "High"},
+  {"subject": "Temps de chargement excessif sur la page d'accueil", "description": "La page d'accueil met plus de 10 secondes a charger avec une connexion fibre", "type": "Bug", "severity": "Important", "priority": "Normal"},
+  {"subject": "Faute d'orthographe sur la page de connexion", "description": "Le mot Connextion est mal ecrit dans le titre de la page", "type": "Bug", "severity": "Minor", "priority": "Low"},
+  {"subject": "Ajouter le mode sombre", "description": "Implementer un theme sombre pour reduire la fatigue visuelle", "type": "Enhancement", "severity": "Normal", "priority": "Normal"},
+  {"subject": "Erreur 500 lors de l'export PDF", "description": "Le serveur renvoie une erreur 500 quand on exporte un rapport de plus de 50 pages", "type": "Bug", "severity": "Critical", "priority": "High"},
+  {"subject": "Notification push non recue sur Android", "description": "Les notifications push ne sont jamais delivrees sur les appareils Android 14", "type": "Bug", "severity": "Important", "priority": "High"},
+  {"subject": "Comment filtrer les resultats par date", "description": "Est-il possible de filtrer les resultats par plage de dates dans le tableau de bord", "type": "Question", "severity": "Normal", "priority": "Normal"},
+  {"subject": "Fuite memoire apres 2h d'utilisation", "description": "La consommation RAM augmente progressivement jusqu'a rendre l'app inutilisable", "type": "Bug", "severity": "Critical", "priority": "High"},
+  {"subject": "Alignement des colonnes casse en mode tablette", "description": "Les colonnes du tableau se chevauchent en resolution 1024x768", "type": "Bug", "severity": "Minor", "priority": "Low"},
+  {"subject": "Supporter l'import de fichiers Excel", "description": "Ajouter la possibilite d'importer des donnees depuis des fichiers xlsx", "type": "Enhancement", "severity": "Normal", "priority": "Normal"},
+  {"subject": "Mot de passe visible en clair dans les logs", "description": "Les mots de passe utilisateurs apparaissent en clair dans les logs serveur", "type": "Bug", "severity": "Critical", "priority": "High"},
+  {"subject": "Le tri par nom ne fonctionne pas", "description": "Cliquer sur la colonne Nom ne trie pas les resultats alphabetiquement", "type": "Bug", "severity": "Important", "priority": "Normal"},
+  {"subject": "Comment fonctionne l'authentification SSO", "description": "Peut-on se connecter via le fournisseur SSO de l'entreprise", "type": "Question", "severity": "Normal", "priority": "High"},
+  {"subject": "Image de profil non sauvegardee", "description": "L'image de profil uploadee disparait apres deconnexion et reconnexion", "type": "Bug", "severity": "Important", "priority": "Normal"},
+  {"subject": "Optimiser les requetes SQL du dashboard", "description": "Les requetes du tableau de bord prennent trop de temps sur les gros volumes", "type": "Enhancement", "severity": "Normal", "priority": "Normal"},
+  {"subject": "Double envoi de mail de confirmation", "description": "L'utilisateur recoit deux emails identiques lors de l'inscription", "type": "Bug", "severity": "Minor", "priority": "Low"},
+  {"subject": "Ajouter l'export au format CSV", "description": "Permettre d'exporter les donnees du tableau en format CSV", "type": "Enhancement", "severity": "Wishlist", "priority": "Low"},
+  {"subject": "Session expiree sans avertissement", "description": "L'utilisateur est deconnecte sans message apres 15 minutes d'inactivite", "type": "Bug", "severity": "Important", "priority": "High"},
+  {"subject": "Quelle est la limite de taille des fichiers", "description": "Quelle est la taille maximale autorisee pour l'upload de pieces jointes", "type": "Question", "severity": "Wishlist", "priority": "Low"}
+]
