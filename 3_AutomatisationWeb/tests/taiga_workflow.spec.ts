@@ -57,8 +57,8 @@ test('Taiga issue workflow: create, filter, search, and delete', async ({ page }
 
   // LOGIN
   await page.getByRole('link', { name: 'Login' }).click();
-  await page.getByRole('textbox', { name: 'Username or email (case' }).fill('mayayousfi');
-  await page.getByRole('textbox', { name: 'Password (case sensitive)' }).fill('.h!E7D8rGKuph9e');
+  await page.getByRole('textbox', { name: 'Username or email (case' }).fill(process.env.TAIGA_USERNAME!);
+  await page.getByRole('textbox', { name: 'Password (case sensitive)' }).fill(process.env.TAIGA_PASSWORD!);
   await page.getByRole('button', { name: 'Login' }).click();
   await expect(page.getByText('Projects Dashboard')).toBeVisible();
 
